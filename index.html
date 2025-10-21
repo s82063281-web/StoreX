@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Master Yourself — Free Ebook</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#080812;
+      --neon-pink:#ff3ca6;
+      --neon-cyan:#00f0ff;
+      --accent:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      --glass:rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;font-family:'Inter',system-ui,Roboto,Arial;background:var(--bg);color:#e7ecff}
+    /* Background video */
+    .bg-wrap{position:fixed;inset:0;z-index:-2;overflow:hidden}
+    .bg-wrap video{min-width:100%;min-height:100%;object-fit:cover;filter:brightness(.45) saturate(1.05)}
+    .bg-overlay{position:fixed;inset:0;background:
+      radial-gradient(700px 350px at 10% 20%, rgba(0,240,255,0.05), transparent),
+      radial-gradient(700px 350px at 90% 80%, rgba(255,60,166,0.05), transparent);
+      z-index:-1}
+    /* Layout */
+    .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
+    .card{width:100%;max-width:1000px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:26px;display:grid;grid-template-columns:360px 1fr;gap:26px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(0,0,0,0.7)}
+    .cover{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
+    .cover img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{margin:0 0 8px 0;font-size:28px}
+    .subtitle{color:#cfe2ff;margin-bottom:14px}
+    .pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .pill{background:var(--glass);padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+    .download-row{display:flex;gap:12px;align-items:center;margin-top:6px}
+    .btn{
+      padding:12px 16px;border-radius:12px;font-weight:800;border:0;cursor:pointer;font-size:15px;letter-spacing:0.3px;text-decoration:none;
+    }
+    .btn-download{background:var(--accent);color:#041025;box-shadow:0 10px 30px rgba(0,240,255,0.06)}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#eaf2ff}
+    .desc{color:#cbd7ff;line-height:1.55}
+    /* Downloads counter at bottom */
+    .downloads-bar{
+      margin-top:20px;display:flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:12px;font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;background:linear-gradient(90deg, rgba(0,0,0,0.15), rgba(255,255,255,0.02));
+      -webkit-background-clip:text;color:transparent;background-clip:text;
+      text-shadow:0 0 12px rgba(0,240,255,0.12);
+    }
+    .counter{background:var(--accent);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 18px rgba(0,240,255,0.12)}
+    .note{font-size:12px;color:#9fb0ff;margin-top:8px;text-align:center}
+    @media(max-width:880px){.card{grid-template-columns:1fr}.cover img{height:420px}}
+  </style>
+</head>
+<body>
+  <!-- Background video (optional) -->
+  <div class="bg-wrap" aria-hidden="true">
+    <video id="bgVideo" autoplay muted loop playsinline>
+      <!-- Replace bg.mp4 with your preferred mp4; if missing, page falls back to overlay gradient -->
+      <source src="bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="cover">
+        <!-- Put your cover file (IMG-20251020-WA0011.jpg) in the same folder -->
+        <img id="coverImg" src="IMG-20251020-WA0011.jpg" alt="Master Yourself Cover">
+      </div>
+
+      <div>
+        <h1>Master Yourself</h1>
+        <div class="subtitle">A practical guide to self-mastery — bite-sized lessons, exercises and mindset shifts.</div>
+
+        <div class="pills">
+          <div class="pill">PDF • 57 pages</div>
+          <div class="pill">English</div>
+          <div class="pill">Completely Free</div>
+        </div>
+
+        <div class="desc">
+          This ebook is free to download — use it, share it, and help others become their best selves.
+        </div>
+
+        <div class="download-row">
+          <!-- DOWNLOAD_BUTTON: opens Dropbox and increments global counter -->
+          <a id="downloadBtn" class="btn btn-download" href="#" role="button">📥 Download Free Ebook</a>
+          <a id="previewBtn" class="btn btn-outline" href="IMG-20251020-WA0011.jpg" target="_blank">Preview Cover</a>
+        </div>
+
+        <div class="note" style="margin-top:12px">
+          Tip: If the download doesn't start in a few seconds, click the button again.
+        </div>
+
+        <!-- Live counter (mirrors realtime DB) -->
+        <div id="downloadsBar" class="downloads-bar" style="margin-top:26px">
+          🔥 Total downloads — <span id="counter" class="counter">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase + Realtime Database (modular SDK) -->
+  <script type="module">
+    // ====== Replace these with your project's config (you already provided these) ======
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js";
+    import {
+      getDatabase,
+      ref,
+      onValue,
+      runTransaction,
+      set,
+      get
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+    // Your Firebase config (from your project)
+    const firebaseConfig = {
+      apiKey: "AIzaSyD874loFjRdMtNlKKT7Rsu8Fhbl58mdxPk",
+      authDomain: "site-downloads-9f05c.firebaseapp.com",
+      projectId: "site-downloads-9f05c",
+      storageBucket: "site-downloads-9f05c.firebasestorage.app",
+      messagingSenderId: "736263443849",
+      appId: "1:736263443849:web:26a13510e05104fa637d58",
+      measurementId: "G-9QQM579JFP"
+      // note: databaseURL will be attached when initializing DB below
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Analytics is optional
+    try { getAnalytics(app); } catch(e){ /* analytics may fail in some hosts, ignore */ }
+
+    // ====== Use the Realtime DB URL you gave me ======
+    const DATABASE_URL = "https://site-downloads-9f05c-default-rtdb.asia-southeast1.firebasedatabase.app";
+
+    // Initialize database
+    const db = getDatabase(app, DATABASE_URL);
+
+    // Database path to store the global counter
+    const counterRef = ref(db, 'global/downloads');
+
+    // UI elements
+    const counterEl = document.getElementById('counter');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Dropbox direct-download URL (dl=1 ensures immediate download)
+    const DROPBOX_PDF = "https://www.dropbox.com/scl/fi/w9xxfewr67kip6sf7szby/Achieve-yourself-first_20251020_222956_0000.pdf?rlkey=d6hhatyy91gvm1dhzdo2l3vh6&st=l9q4sffi&dl=1";
+
+    // 1) Ensure counter exists (if not, create with initial value 1274 as example or 0)
+    // We'll set it to the current shown value only if it doesn't exist yet.
+    async function ensureCounter() {
+      try {
+        // get current value once
+        const snapshot = await get(counterRef);
+        if (!snapshot.exists()) {
+          // initialize at 1274 if you want a pre-seeded number, else 0
+          await set(counterRef, 1274);
+        }
+      } catch (err) {
+        console.error("Error ensuring counter:", err);
+      }
+    }
+
+    // 2) Listen for live updates to the counter and update UI
+    onValue(counterRef, (snap) => {
+      const val = snap.exists() ? snap.val() : 0;
+      counterEl.textContent = numberWithCommas(val);
+    }, (err) => {
+      console.error("Realtime DB read failed:", err);
+      counterEl.textContent = "—";
+    });
+
+    // 3) When someone clicks Download, increment safely, then open Dropbox link
+    downloadBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      // Run a transaction to increment counter safely on the server
+      try {
+        await runTransaction(counterRef, (current) => {
+          // if no value yet, set to 1
+          if (current === null) return 1;
+          // increment
+          return current + 1;
+        });
+      } catch (txErr) {
+        console.error("Transaction error:", txErr);
+        // If transaction fails, still attempt to let user download
+      }
+
+      // Open Dropbox in new tab to trigger PDF download
+      const a = document.createElement('a');
+      a.href = DROPBOX_PDF;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.click();
+    });
+
+    // Utility: format number like 12,345
+    function numberWithCommas(x) {
+      if (x === null || x === undefined) return "0";
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Initialize
+    ensureCounter().catch(()=>{});
+  </script>
+
+  <!-- Small fallback / note -->
+  <noscript style="display:block;text-align:center;margin:18px;color:#9fb0ff">
+    JavaScript is required for the live counter. The download link still works without JS.
+  </noscript>
+</body>
+          </html>
