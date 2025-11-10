@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Master Yourself — Free Ebook</title>
+  <title>Master Yourself — Free Ebooks</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
       z-index:-1}
 
     /* Layout */
-    .container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
+    .container{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;gap:32px}
     .card{width:100%;max-width:1000px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:26px;display:grid;grid-template-columns:360px 1fr;gap:26px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(0,0,0,0.7)}
     .cover{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(0,0,0,0.5)}
     .cover img{width:100%;height:100%;object-fit:cover;display:block}
@@ -36,94 +36,90 @@
     .subtitle{color:#cfe2ff;margin-bottom:14px}
     .pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
     .pill{background:var(--glass);padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;border:1px solid rgba(255,255,255,0.02)}
-    .download-row{display:flex;gap:12px;align-items:center;margin-top:6px}
-    .btn{
-      padding:12px 16px;border-radius:12px;font-weight:800;border:0;cursor:pointer;font-size:15px;letter-spacing:0.3px;text-decoration:none;
-    }
+    .download-row{display:flex;gap:12px;align-items:center;margin-top:6px;flex-wrap:wrap}
+    .btn{padding:12px 16px;border-radius:12px;font-weight:800;border:0;cursor:pointer;font-size:15px;letter-spacing:0.3px;text-decoration:none}
     .btn-download{background:var(--accent);color:#041025;box-shadow:0 10px 30px rgba(0,240,255,0.06)}
     .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#eaf2ff}
     .desc{color:#cbd7ff;line-height:1.55}
 
-    /* Live counter at bottom */
-    .downloads-bar{
-      margin-top:20px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      font-family:'Poppins',sans-serif;
-      font-weight:700;
-      font-size:20px;
-      color:#cfe2ff; /* clear text */
-      text-shadow:
-        0 0 4px #00f0ff,
-        0 0 8px #ff3ca6,
-        0 0 12px #00f0ff,
-        0 0 20px #ff3ca6;
-    }
-
-    .counter{
-      font-size:26px;
-      font-weight:800;
-      background: linear-gradient(90deg, #00f0ff, #ff3ca6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow:
-        0 0 6px #00f0ff,
-        0 0 12px #ff3ca6,
-        0 0 18px #00f0ff,
-        0 0 24px #ff3ca6;
-    }
-
+    /* Live counter */
+    .downloads-bar{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Poppins',sans-serif;font-weight:700;font-size:20px;color:#cfe2ff;text-shadow:0 0 4px #00f0ff,0 0 8px #ff3ca6,0 0 12px #00f0ff,0 0 20px #ff3ca6}
+    .counter{font-size:26px;font-weight:800;background:linear-gradient(90deg,#00f0ff,#ff3ca6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 6px #00f0ff,0 0 12px #ff3ca6,0 0 18px #00f0ff,0 0 24px #ff3ca6}
     .note{font-size:12px;color:#9fb0ff;margin-top:8px;text-align:center}
 
+    /* Ad Spaces */
+    .ad-space{width:100%;max-width:1000px;min-height:90px;border:1px dashed rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#b6c5ff;font-size:14px;background:rgba(255,255,255,0.02);backdrop-filter:blur(6px);margin:10px 0;text-align:center;text-shadow:0 0 8px rgba(0,240,255,0.3)}
+    .bottom-ad{position:fixed;bottom:0;left:0;right:0;height:70px;display:flex;align-items:center;justify-content:center;background:rgba(8,8,18,0.8);border-top:1px solid rgba(255,255,255,0.05);color:#c9d6ff;font-size:13px;backdrop-filter:blur(8px);z-index:10}
     @media(max-width:880px){.card{grid-template-columns:1fr}.cover img{height:420px}}
+    @media(max-width:600px){.bottom-ad{font-size:11px;height:60px;padding:0 6px}.ad-space{min-height:70px;font-size:12px}}
   </style>
 </head>
 <body>
-  <!-- Background video (optional) -->
+  <!-- Background video -->
   <div class="bg-wrap" aria-hidden="true">
-    <video id="bgVideo" autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline>
       <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
   </div>
 
   <div class="container">
-    <div class="card">
-      <div class="cover">
-        <img id="coverImg" src="IMG-20251020-WA0006.jpg" alt="Master Yourself Cover">
-      </div>
 
+    <!-- Book 1 -->
+    <div class="card">
+      <div class="cover"><img src="IMG-20251020-WA0006.jpg" alt="Master Yourself Cover"></div>
       <div>
         <h1>Master Yourself</h1>
         <div class="subtitle">A practical guide to self-mastery — bite-sized lessons, exercises and mindset shifts.</div>
-
         <div class="pills">
-          <div class="pill">PDF • 57 pages</div>
-          <div class="pill">English</div>
-          <div class="pill">Completely Free</div>
+          <div class="pill">PDF • 57 pages</div><div class="pill">English</div><div class="pill">Completely Free</div>
         </div>
-
         <div class="desc">
-          This book contains knowledge from several podcasts, books and interviews.also this ebook is free to download — use it, share it, and help others become their best selves.
+          This book contains knowledge from several podcasts, books and interviews. It’s free to download — use it, share it, and help others become their best selves.
         </div>
-
         <div class="download-row">
-          <a id="downloadBtn" class="btn btn-download" href="#">📥 Download Free Ebook</a>
-          <a id="previewBtn" class="btn btn-outline" href="IMG-20251020-WA0006.jpg" target="_blank">Preview Cover</a>
+          <a id="downloadBtn1" class="btn btn-download" href="#">📥 Download Free Ebook</a>
+          <a class="btn btn-outline" href="IMG-20251020-WA0006.jpg" target="_blank">Preview Cover</a>
         </div>
+        <div class="note">Tip: If the download doesn't start, click again.</div>
+        <div class="downloads-bar">🔥 Total downloads — <span id="counter1" class="counter">1264</span></div>
+      </div>
+    </div>
 
-        <div class="note">Tip: If the download doesn't start, click the button again.</div>
+    <!-- Ad Space -->
+    <div class="ad-space">
+      <!-- Replace this with your AdSense script later -->
+      <p>Ad Space — Your AdMob / AdSense banner will appear here.</p>
+    </div>
 
-        <div id="downloadsBar" class="downloads-bar">
-          🔥 Total downloads — <span id="counter" class="counter">1264</span>
+    <!-- Book 2 -->
+    <div class="card">
+      <div class="cover"><img src="Image7.jpg" alt="Money Mindset Cover"></div>
+      <div>
+        <h1>Money MINDSET</h1>
+        <div class="subtitle">Rewire your brain to attract success, wealth, and abundance.</div>
+        <div class="pills">
+          <div class="pill">PDF • 78 pages</div><div class="pill">English</div><div class="pill">Completely Free</div>
         </div>
+        <div class="desc">
+          A powerful guide to help you break mental barriers around money, success, and abundance. Learn how to think, act, and attract like the wealthy — one mindset shift at a time.
+        </div>
+        <div class="download-row">
+          <a class="btn btn-download" href="https://mastbruho.gumroad.com/l/umedqy" target="_blank" rel="noopener">💸 Get Free Ebook</a>
+          <a class="btn btn-outline" href="Image7.jpg" target="_blank">Preview Cover</a>
+        </div>
+        <div class="note">Your transformation starts with the right mindset.</div>
+        <div class="downloads-bar">💥 Total downloads — <span id="counter2" class="counter">879</span></div>
       </div>
     </div>
   </div>
 
-  <!-- Firebase + Realtime Database -->
+  <!-- Bottom Ad -->
+  <div class="bottom-ad">
+    <p>Ad Space — Sticky footer ad (AdMob / AdSense)</p>
+  </div>
+
+  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js";
@@ -141,12 +137,10 @@
 
     const app = initializeApp(firebaseConfig);
     try { getAnalytics(app); } catch(e){}
-
-    const DATABASE_URL = "https://site-downloads-9f05c-default-rtdb.asia-southeast1.firebasedatabase.app";
-    const db = getDatabase(app, DATABASE_URL);
+    const db = getDatabase(app, "https://site-downloads-9f05c-default-rtdb.asia-southeast1.firebasedatabase.app");
     const counterRef = ref(db, 'global/downloads');
-    const counterEl = document.getElementById('counter');
-    const downloadBtn = document.getElementById('downloadBtn');
+    const counterEl = document.getElementById('counter1');
+    const downloadBtn = document.getElementById('downloadBtn1');
     const DROPBOX_PDF = "https://www.dropbox.com/scl/fi/w9xxfewr67kip6sf7szby/Achieve-yourself-first_20251020_222956_0000.pdf?rlkey=d6hhatyy91gvm1dhzdo2l3vh6&st=l9q4sffi&dl=1";
 
     async function ensureCounter() {
@@ -163,15 +157,13 @@
 
     downloadBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      try {
-        await runTransaction(counterRef, (current) => current === null ? 1 : current + 1);
-      } catch(e){console.error(e);}
+      try { await runTransaction(counterRef, (current) => current === null ? 1 : current + 1); } 
+      catch(e){console.error(e);}
       const a = document.createElement('a'); a.href=DROPBOX_PDF; a.target='_blank'; a.click();
     });
 
     function numberWithCommas(x){return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");}
     ensureCounter().catch(()=>{});
   </script>
-
 </body>
-  </html>
+</html>
